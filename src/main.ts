@@ -10,6 +10,6 @@ async function bootstrap() {
   //-----------------------------------------Helmet-------------------------------------------
   app.use(helmet());
   //-----------------------------------------Start Server--------------------------------------------
-  await app.listen(port, () => console.log(`server running on port ${port}`));
+  await app.listen(port, '0.0.0.0', () => console.log(`Server running on port ${port}`));
 }
 bootstrap();
