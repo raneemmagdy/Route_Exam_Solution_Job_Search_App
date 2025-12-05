@@ -20,42 +20,45 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
   imports: [
     //---------------------Config---------------------
     ConfigModule.forRoot({
-      // envFilePath: 'config/.env.development',
       isGlobal: true,
+      envFilePath: process.env.NODE_ENV === 'production'
+        ? undefined
+        : 'config/.env.development',
     }),
-    //---------------------Mongoose---------------------
-    MongooseModule.forRoot(process.env.MONGO_URI as string, {
-      onConnectionCreate: (connection: Connection) => {
-        connection.on('connected', () => console.log('MongoDB connected successfully🎉💙'));
-      }
-    }),
-    //---------------------Rate Limiter---------------------
-    ThrottlerModule.forRoot({
-      throttlers: [
-        {
-          ttl: 20000,// 20 seconds
-          limit: 2,
-        },
-      ],
-    }),
-    //---------------------Schedule---------------------
-    ScheduleModule.forRoot({}),
-    //---------------------GraphQL---------------------
-    GraphQLModule.forRoot<ApolloDriverConfig>({
-      driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/schema.gql')
-    }),
-    //---------------------Moduels---------------------
-    // CommonModule,
-    OtpModel,
-    AuthModule,
-    UserModule,
-    CompanyModule,
-    AdminModule,
-    JobModule,
-    ApplicationModule,
-    GatewayModule,
-    ChatModule,
+
+  //---------------------Mongoose---------------------
+  MongooseModule.forRoot(process.env.MONGO_URI as string, {
+    onConnectionCreate: (connection: Connection) => {
+      connection.on('connected', () => console.log('MongoDB connected successfully🎉💙'));
+    }
+  }),
+  //---------------------Rate Limiter---------------------
+  ThrottlerModule.forRoot({
+    throttlers: [
+      {
+        ttl: 20000,// 20 seconds
+        limit: 2,
+      },
+    ],
+  }),
+  //---------------------Schedule---------------------
+  ScheduleModule.forRoot({}),
+  //---------------------GraphQL---------------------
+  GraphQLModule.forRoot<ApolloDriverConfig>({
+    driver: ApolloDriver,
+    autoSchemaFile: join(process.cwd(), 'src/schema.gql')
+  }),
+  //---------------------Moduels---------------------
+  // CommonModule,
+  OtpModel,
+  AuthModule,
+  UserModule,
+  CompanyModule,
+  AdminModule,
+  JobModule,
+  ApplicationModule,
+  GatewayModule,
+  ChatModule,
     // RouterModule.register([
     //   {
     //     path: 'company',
