@@ -20,7 +20,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
   imports: [
     //---------------------Config---------------------
     ConfigModule.forRoot({
-      envFilePath: 'config/.env.development',
+      // envFilePath: 'config/.env.development',
       isGlobal: true,
     }),
     //---------------------Mongoose---------------------
