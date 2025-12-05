@@ -1,0 +1,113 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""File response GraphQL"""
+type FileResponse {
+  public_id: String
+  secure_url: String
+}
+
+"""get One user response GraphQL"""
+type OneUserResponse {
+  _id: ID!
+  firstName: String!
+  lastName: String!
+  fullName: String
+  email: String!
+  mobileNumber: String
+  role: RoleEnum!
+  provider: ProviderEnum!
+  gender: GenderEnum!
+  DOB: DateTime
+  isConfirmed: Boolean
+  deletedAt: DateTime
+  bannedAt: DateTime
+  changeCredentialTime: DateTime
+  profilePic: FileResponse
+  coverPic: FileResponse
+}
+
+"""Role enum GraphQL"""
+enum RoleEnum {
+  User
+  Admin
+}
+
+"""Provider enum GraphQL"""
+enum ProviderEnum {
+  system
+  google
+}
+
+"""Gender enum GraphQL"""
+enum GenderEnum {
+  Male
+  Female
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+"""get all user response GraphQL"""
+type GetAllUserResponse {
+  docsCount: Float
+  limit: Float
+  currentPage: Float
+  pages: Float
+  result: [OneUserResponse!]!
+}
+
+type OneCompanyResponse {
+  _id: ID!
+  companyName: String!
+  description: String!
+  industry: String!
+  address: String
+  numberOfEmployees: NumberOfEmployeeEnum!
+  companyEmail: String!
+  createdBy: ID!
+  logo: FileResponse
+  coverPic: FileResponse
+  HRs: [ID!]
+  bannedAt: DateTime
+  deletedAt: DateTime
+  legalAttachment: FileResponse
+  approvedByAdmin: Boolean
+}
+
+"""Number of employee enum GraphQL"""
+enum NumberOfEmployeeEnum {
+  ONE_TO_TEN
+  ELEVEN_TO_TWENTY
+  TWENTYONE_TO_FIFTY
+  FIFTYONE_TO_TWOHUNDRED
+  TWOHUNDREDONE_TO_FIVEHUNDRED
+  FIVEHUNDREDONE_TO_THOUSAND
+  THOUSAND_PLUS
+}
+
+"""get all companies response GraphQL"""
+type GetAllCompanyResponse {
+  docsCount: Float
+  limit: Float
+  currentPage: Float
+  pages: Float
+  result: [OneCompanyResponse!]!
+}
+
+type Query {
+  getAllUsers(query: PaginationGraphDto): GetAllUserResponse!
+  getAllCompanies(query: PaginationGraphDto): GetAllCompanyResponse!
+  getAllData(query: PaginationGraphDto): [AllDataUnion!]!
+}
+
+"""Pagination input type"""
+input PaginationGraphDto {
+  page: Float
+  limit: Float
+}
+
+union AllDataUnion = GetAllUserResponse | GetAllCompanyResponse
